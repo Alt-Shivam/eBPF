@@ -113,7 +113,7 @@ $(XDP_OBJ): %.o: %.c  Makefile $(COMMON_MK) $(KERN_USER_H) $(EXTRA_DEPS)
 	    -D __BPF_TRACING__ \
 	    $(BPF_CFLAGS) \
 	    -Wall \
-	    -Wno-unused-value \
+	    -Wno-unused-but-set-variable \
 	    -Wno-pointer-sign \
 	    -Wno-compare-distinct-pointer-types \
 	    -Werror \
