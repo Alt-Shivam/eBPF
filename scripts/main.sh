@@ -2,7 +2,8 @@
 
 echo "Program to attach eBPF programs to NIC"
 OPTIONS=$1
-
+NIC1=$2
+NIC2=$3
 
 case $OPTIONS in
 
@@ -10,7 +11,7 @@ case $OPTIONS in
     echo "List of options to perform:"
     echo ">> p For installing required packages."
     echo ">> c Compile XDP-Bridge"
-    echo ">> a Attach XDP-Bridge"
+    echo ">> a Attach XDP-Bridge (also provide NIC names .ie './main.sh a eno2 eno3')"
     ;;
 
   p)
@@ -23,13 +24,23 @@ case $OPTIONS in
     ;;
 
   c)
-    echo -n "Compiling XDP-Bridge program."
+    echo "Compiling XDP-Bridge program."
     cd ../packet03-redirecting/
     make
     ;;
 
+  c)
+    echo "Attaching XDP-Bridge program."
+    cd ../packet03-redirecting/
+    sudo mount -t bpf bpf /sys/fs/bpf/
+    sudo ./xdp_loader -d $NIC1 -F — progsec xdp_router
+    sudo ./xdp_loader -d $NIC2 -F — progsec xdp_router
+    sudo ./xdp_prog_user -d $NIC1
+    sudo ./xdp_prog_user -d $NIC2
+    ;;
+
   *)
-    echo -n "unknown"
+    echo "Please select a valid option."
     ;;
 esac
 
