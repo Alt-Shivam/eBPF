@@ -10,8 +10,8 @@ case $OPTIONS in
   help)
     echo "List of options to perform:"
     echo ">> p For installing required packages."
-    echo ">> c Compile XDP-Bridge"
-    echo ">> a Attach XDP-Bridge (also provide NIC names .ie './main.sh a eno2 eno3')"
+    echo ">> c For Compile XDP-Bridge"
+    echo ">> a For Attaching XDP-Bridge (also provide NIC names .ie './main.sh a eno2 eno3')"
     ;;
 
   p)
@@ -29,7 +29,7 @@ case $OPTIONS in
     make
     ;;
 
-  c)
+  a)
     echo "Attaching XDP-Bridge program."
     cd ../packet03-redirecting/
     sudo mount -t bpf bpf /sys/fs/bpf/
